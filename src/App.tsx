@@ -10,7 +10,6 @@ function App() {
       <HelmetProvider>
           <Helmet  titleTemplate="%s | Pizza Marques Delivery"/>
           <RouterProvider router={router}>
-
           </RouterProvider>
       </HelmetProvider>
   )
