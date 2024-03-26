@@ -3,6 +3,8 @@ import {MontRevenueCard} from "@/pages/app/dashboard/mont-revenue-card.tsx";
 import {MonthOrdersAmountCard} from "@/pages/app/dashboard/month-orders-amount-card.tsx";
 import {DayOrdersAmountCard} from "@/pages/app/dashboard/day-orders-amount-card.tsx";
 import {MonthCanceledOrdersAmountCard} from "@/pages/app/dashboard/month-canceled-orders-amount-card.tsx";
+import {RevenueChart} from "@/pages/app/dashboard/revenue-chart.tsx";
+import {PopularProductsChart} from "@/pages/app/dashboard/popular-products-chart.tsx";
 
 export function Dashboard() {
     return(
@@ -15,8 +17,15 @@ export function Dashboard() {
                     <MonthOrdersAmountCard/>
                     <DayOrdersAmountCard />
                     <MonthCanceledOrdersAmountCard />
+                </div>
+
+
+                <div className="grid grid-cols-9 gap-4">
+                    <RevenueChart/>
+                    <PopularProductsChart/>
 
                 </div>
+
             </div>
         </>
 
