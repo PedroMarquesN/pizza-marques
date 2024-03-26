@@ -5,7 +5,7 @@ export interface OrdersDetailsProps {
 
 }
 
-export function OrderDetails(props:OrdersDetailsProps) {
+export function OrderDetails() {
     return(
         <DialogContent>
             <DialogHeader>
