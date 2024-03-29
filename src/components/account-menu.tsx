@@ -5,7 +5,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {Building, ChevronDown, LogOut} from "lucide-react";
+import {Building, ChevronDown, Infinity, LogOut} from "lucide-react";
 import {useQuery} from "@tanstack/react-query";
 import {getProfile} from "@/api/get-profile.ts";
 import {getManagedRestaurant} from "@/api/get-managed-restaurant.ts";
@@ -16,12 +16,14 @@ import {StoryProfileDialog} from "@/components/story-profile-dialog.tsx";
 export function AccountMenu() {
     const {data:profile, isLoading: isLoadingProfile} = useQuery({
         queryKey:['profile'],
-        queryFn:getProfile
+        queryFn:getProfile,
+        staleTime: Infinity
     })
 
     const {data:managedRestaurant, isLoading: isLoadingManagedRestaurant} = useQuery({
         queryKey:['managed-restaurant'],
-        queryFn:getManagedRestaurant
+        queryFn:getManagedRestaurant,
+        staleTime: Infinity
     })
 
     return (
