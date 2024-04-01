@@ -6,5 +6,7 @@ interface UptadeProfileBody {
 }
 
 export async function updateProfile({name,description}:UptadeProfileBody) {
+
+
     await api.put('/profile', {name, description})
 }

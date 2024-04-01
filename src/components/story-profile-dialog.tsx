@@ -10,19 +10,18 @@ import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Textarea} from "@/components/ui/textarea.tsx";
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {getManagedRestaurant} from "@/api/get-managed-restaurant.ts";
 import {z} from 'zod'
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {updateProfile} from "@/api/uptade-profile.ts";
 import {toast} from "sonner";
-import {Infinity} from "lucide-react";
 
 
 const storeProfileSchema = z.object({
     name: z.string().min(1),
-    description: z.string()
+    description: z.string().nullable()
 })
 
 type StoryProfileSchema = z.infer<typeof storeProfileSchema>
@@ -31,10 +30,13 @@ type StoryProfileSchema = z.infer<typeof storeProfileSchema>
 
 
 export function StoryProfileDialog() {
+    const queryClient = useQueryClient()
+
+
     const {data:managedRestaurant} = useQuery({
         queryKey:['managed-restaurant'],
         queryFn:getManagedRestaurant,
-        staleTime: Infinity
+
     })
 
 
@@ -46,8 +48,23 @@ export function StoryProfileDialog() {
         }
     })
 
+    function updateManagedRestaurantCache({name, description}:StoryProfileSchema) {
+        const cached = queryClient.getQueryData(['managed-restaurant'])
+
+        if (cached){
+            queryClient.setQueryData(['managed-restaurant'], {
+                ...cached,
+                name,
+                description
+            })
+        }
+
+    }
     const {mutateAsync: updadeProfileFn} = useMutation({
-        mutationFn: updateProfile
+        mutationFn: updateProfile,
+        onMutate({name, description}) {
+            updateManagedRestaurantCache({name,description})
+        }
     })
 
     async function handleUpdateProfile(data:StoryProfileSchema){
@@ -63,6 +80,7 @@ export function StoryProfileDialog() {
 
         }
     }
+
 
     return (
         <DialogContent>
